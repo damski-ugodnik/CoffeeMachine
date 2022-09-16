@@ -963,6 +963,9 @@ files:
 - name: src/controllers/indicators/impl/CupsIndicator.java
   visible: true
   learner_created: true
+- name: src/utils/IInputValidator.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5333#comment
 status: Failed
 feedback:
