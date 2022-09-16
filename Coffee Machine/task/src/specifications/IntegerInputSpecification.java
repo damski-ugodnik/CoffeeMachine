@@ -12,7 +12,13 @@ public record IntegerInputSpecification(String inputMessage, String invalidValue
         return invalidValueMessage;
     }
 
-    public boolean fitsSpecification(int value) {
-        return value >= minValue && value <= maxValue;
+    @Override
+    public int maxValue() {
+        return maxValue;
+    }
+
+    @Override
+    public int minValue() {
+        return minValue;
     }
 }

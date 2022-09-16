@@ -46,7 +46,7 @@ public class CoffeeMachine {
         }};
         List<ICoffeeMachineProcessor> processors = new LinkedList<>(){{
             add(new FillMachineProcessor(fillers));
-            add(new MakeCoffeeProcessor(cookers, indicators));
+            add(new BuyCoffeeProcessor(cookers, indicators));
             add(new TakeMoneyProcessor());
             add(new RemainderProcessor());
             add(new ExitProcessor());

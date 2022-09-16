@@ -1,6 +1,6 @@
 [1;31m
 Start test 1[0m
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -10,17 +10,17 @@
 9 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > buy
 CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
 > 2
 .I have enough resources, making you a coffee!
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > buy
 CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
 > 2
 Sorry, not enough water!
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > fill
 ,Write how many ml of water you want to add:
 > 1000
@@ -30,15 +30,15 @@
 > 0
 0Write how many disposable cups you want to add:
 > 0
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > buy
 CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
 > 2
 .I have enough resources, making you a coffee!
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > take
 I gave you $564
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -48,11 +48,11 @@
 7 disposable cups
 $0 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > exit
 [1;31m
 Start test 2[0m
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -62,7 +62,7 @@
 9 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > fill
 ,Write how many ml of water you want to add:
 > 3000
@@ -72,7 +72,7 @@
 > 3000
 0Write how many disposable cups you want to add:
 > 3000
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -82,11 +82,11 @@
 3009 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > exit
 [1;31m
 Start test 3[0m
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -96,12 +96,12 @@
 9 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > buy
 CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
 > 1
 .I have enough resources, making you a coffee!
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -111,11 +111,11 @@
 8 disposable cups
 $554 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > exit
 [1;31m
 Start test 4[0m
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -125,12 +125,12 @@
 9 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > buy
 CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
 > 2
 .I have enough resources, making you a coffee!
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -140,11 +140,11 @@
 8 disposable cups
 $557 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > exit
 [1;31m
 Start test 5[0m
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -154,12 +154,12 @@
 9 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > buy
 CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
 > 3
 .I have enough resources, making you a coffee!
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -169,11 +169,11 @@
 8 disposable cups
 $556 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > exit
 [1;31m
 Start test 6[0m
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -183,10 +183,10 @@
 9 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > take
 I gave you $550
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -196,11 +196,11 @@
 9 disposable cups
 $0 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > exit
 [1;31m
 Start test 7[0m
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > remaining
 
 The coffee machine has:
@@ -210,15 +210,19 @@
 9 disposable cups
 $550 of money
 
-1Write action (fill, buy, take, remaining, exit):
+1Write action (take, exit, buy, fill, remaining):
 > buy
 CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
 > back
-No such recipe
-CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
+1Write action (take, exit, buy, fill, remaining):
 > remaining
-No such recipe
-CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
+
+The coffee machine has:
+400 ml of water
+540 ml of milk
+120 g of coffee beans
+9 disposable cups
+$550 of money
+
+1Write action (take, exit, buy, fill, remaining):
 > exit
-No such recipe
-CWhat do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :

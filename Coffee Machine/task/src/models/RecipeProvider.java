@@ -2,19 +2,19 @@ package models;
 
 
 public enum RecipeProvider {
-    ESPRESSO(1) {
+    ESPRESSO("1") {
         @Override
         public CoffeeRecipe getRecipe() {
             return new CoffeeRecipe(this.name().toLowerCase(), 250, 0, 16, 4);
         }
     },
-    LATTE(2) {
+    LATTE("2") {
         @Override
         public CoffeeRecipe getRecipe() {
             return new CoffeeRecipe(this.name().toLowerCase(), 350, 75, 20, 7);
         }
     },
-    CAPPUCCINO(3) {
+    CAPPUCCINO("3") {
         @Override
         public CoffeeRecipe getRecipe() {
             return new CoffeeRecipe(this.name(), 200, 100, 12, 6);
@@ -22,30 +22,30 @@ public enum RecipeProvider {
     };
 
 
-    private final int number;
+    private final String title;
 
     public static String valuesToString() {
         StringBuilder str = new StringBuilder();
         for (RecipeProvider value : values()) {
-            str.append(value.number).append(" - ").append(value.name().toLowerCase()).append(", ");
+            str.append(value.title).append(" - ").append(value.name().toLowerCase()).append(", ");
         }
         str.delete(str.length()-2, str.length()-1);
         str.trimToSize();
         return str.toString();
     }
 
-
-    RecipeProvider(int number) {
-        this.number = number;
+    RecipeProvider(String title) {
+        this.title = title;
     }
 
-    public int getNumber() {
-        return number;
+    public String getTitle() {
+        return title;
     }
 
-    public static RecipeProvider fromNumber(int number) {
+    public static RecipeProvider fromTitle(String title) {
+
         for (RecipeProvider value : values()) {
-            if (value.getNumber() == number) {
+            if(value.getTitle().equals(title)){
                 return value;
             }
         }

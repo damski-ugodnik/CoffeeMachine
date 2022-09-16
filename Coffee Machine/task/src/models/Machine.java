@@ -13,6 +13,10 @@ public class Machine {
         this.isOn = true;
     }
 
+    public void work(String command){
+
+    }
+
     public void showStats() {
         System.out.printf("\nThe coffee machine has:\n" +
                 "%d ml of water\n" +

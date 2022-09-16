@@ -1,7 +1,7 @@
 package utils;
 
+import specifications.InputSpecification;
 import specifications.IntegerInputSpecification;
-import specifications.StringInputSpecification;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public class ConsoleReader {
         }
     }
 
-    public static String readCommands(StringInputSpecification specification) {
+    public static String readCommands(InputSpecification specification) {
         String input;
         while (true){
             System.out.print(specification.inputMessage()+"\n");
