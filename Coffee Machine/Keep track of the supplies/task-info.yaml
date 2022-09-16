@@ -1,0 +1,1002 @@
+type: edu
+custom_name: stage5
+files:
+- name: src/machine/CoffeeMachine.java
+  visible: true
+  text: |
+    package machine;
+
+    public class CoffeeMachine {
+        public static void main(String[] args) {
+            System.out.println("Starting to make a coffee");
+            System.out.println("Grinding coffee beans");
+            System.out.println("Boiling water");
+            System.out.println("Mixing boiled water with crushed coffee beans");
+            System.out.println("Pouring coffee into the cup");
+            System.out.println("Pouring some milk into the cup");
+            System.out.println("Coffee is ready!");
+        }
+    }
+  learner_created: false
+- name: test/CoffeeMachineTest.java
+  visible: false
+  text: |
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testcase.TestCase;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+
+    class TestClue {
+        int water;
+        int milk;
+        int beans;
+        int cups;
+        int money;
+        String feedback;
+        TestClue(int w, int m, int b, int c, int mo, String feedback) {
+            water = w;
+            milk = m;
+            beans = b;
+            cups = c;
+            money = mo;
+            this.feedback = feedback;
+        }
+    }
+
+    public class CoffeeMachineTest extends StageTest<TestClue> {
+
+        @Override
+        public List<TestCase<TestClue>> generate() {
+            return List.of(
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    700 - 400,
+                    390 - 540,
+                    80 - 120 ,
+                    7 - 9,
+                    0 - 550,
+                        "This test is exactly " +
+                            "like in the example - try to run it by yourself"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "fill\n" +
+                        "1000\n" +
+                        "0\n" +
+                        "0\n" +
+                        "0\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "take\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    3000,
+                    3000,
+                    3000 ,
+                    3000,
+                    0,
+                        "This test checks \"fill\" action"))
+                    .setInput(
+                        "remaining\n" +
+                        "fill\n" +
+                        "3000\n" +
+                        "3000\n" +
+                        "3000\n" +
+                        "3000\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    -250,
+                    0,
+                    -16 ,
+                    -1,
+                    4, "This test checks \"buy\" " +
+                        "action with the first variant of coffee"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "1\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    -350,
+                    -75,
+                    -20 ,
+                    -1,
+                    7, "This test checks \"buy\" " +
+                        "action with the second variant of coffee"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    -200,
+                    -100,
+                    -12 ,
+                    -1,
+                    6, "This test checks \"buy\" " +
+                        "action with the third variant of coffee"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "3\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    0,
+                    0,
+                    0 ,
+                    0,
+                    -550, "This test checks \"take\" action"))
+                    .setInput(
+                        "remaining\n" +
+                        "take\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    0,
+                    0,
+                    0 ,
+                    0,
+                    0, "This test checks \"back\" " +
+                        "action right after \"buy\" action"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "back\n" +
+                        "remaining\n" +
+                        "exit\n")
+            );
+        }
+
+        @Override
+        public CheckResult check(String reply, TestClue clue) {
+            String[] lines = reply.split("\\n");
+
+            if (lines.length <= 1) {
+                return CheckResult.wrong("Looks like you didn't print anything!");
+            }
+
+            int water_ = clue.water;
+            int milk_ = clue.milk;
+            int beans_ = clue.beans;
+            int cups_ = clue.cups;
+            int money_ = clue.money;
+
+            List<Integer> milk = new ArrayList<>();
+            List<Integer> water = new ArrayList<>();
+            List<Integer> beans = new ArrayList<>();
+            List<Integer> cups = new ArrayList<>();
+            List<Integer> money = new ArrayList<>();
+
+            for (String line : lines) {
+                line = line.replace("$", "").trim();
+                String[] words = line.split("\\s+");
+                if (words.length == 0) {
+                    continue;
+                }
+                String firstWord = words[0];
+                int amount;
+                try {
+                    amount = Integer.parseInt(firstWord);
+                }
+                catch (Exception e) {
+                    continue;
+                }
+                if (line.contains("milk")) {
+                    milk.add(amount);
+                }
+                else if (line.contains("water")) {
+                    water.add(amount);
+                }
+                else if (line.contains("beans")) {
+                    beans.add(amount);
+                }
+                else if (line.contains("cups")) {
+                    cups.add(amount);
+                }
+                else if (line.contains("money")) {
+                    money.add(amount);
+                }
+            }
+
+            if (milk.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"milk\", " +
+                        "found: " + milk.size());
+            }
+
+            if (water.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"water\", " +
+                        "found: " + water.size());
+            }
+
+            if (beans.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"beans\", " +
+                        "found: " + beans.size());
+            }
+
+            if (cups.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"cups\", " +
+                        "found: " + cups.size());
+            }
+
+            if (money.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"money\", " +
+                        "found: " + money.size());
+            }
+
+            int milk0 = milk.get(0);
+            int milk1 = milk.get(milk.size() - 1);
+
+            int water0 = water.get(0);
+            int water1 = water.get(water.size() - 1);
+
+            int beans0 = beans.get(0);
+            int beans1 = beans.get(beans.size() - 1);
+
+            int cups0 = cups.get(0);
+            int cups1 = cups.get(cups.size() - 1);
+
+            int money0 = money.get(0);
+            int money1 = money.get(money.size() - 1);
+
+            int diffWater = water1 - water0;
+            int diffMilk = milk1 - milk0;
+            int diffBeans = beans1 - beans0;
+            int diffCups = cups1 - cups0;
+            int diffMoney = money1 - money0;
+
+            boolean isCorrect =
+                diffWater == water_ &&
+                diffMilk == milk_ &&
+                diffBeans == beans_ &&
+                diffCups == cups_ &&
+                diffMoney == money_;
+
+            return new CheckResult(isCorrect, clue.feedback);
+        }
+    }
+  learner_created: false
+- name: src/utils/InputValidator.java
+  visible: true
+  text: |
+    package utils;
+
+    import specifications.IntegerInputSpecification;
+    import specifications.StringInputSpecification;
+
+    public class InputValidator {
+
+        public static boolean validateInt(String input, IntegerInputSpecification specification) {
+            try {
+                return specification.fitsSpecification(Integer.parseInt(input));
+            } catch (NumberFormatException exception) {
+                return false;
+            }
+        }
+
+        public static boolean validateString(String input, StringInputSpecification specification) {
+            return specification.fitsSpecification(input);
+        }
+    }
+  learner_created: true
+- name: src/controllers/fillers/ICoffeeMachineFiller.java
+  visible: true
+  text: |
+    package controllers.fillers;
+
+    import models.Machine;
+
+    public interface ICoffeeMachineFiller {
+        void fillSupply(Machine coffeeMachine);
+    }
+  learner_created: true
+- name: src/controllers/cookers/ICoffeeCooker.java
+  visible: true
+  text: |
+    package controllers.cookers;
+
+    import models.CoffeeRecipe;
+    import models.Machine;
+
+    public interface ICoffeeCooker {
+        void makeCoffee(Machine coffeeMachine, CoffeeRecipe recipe);
+    }
+  learner_created: true
+- name: src/controllers/processors/impl/TakeMoneyProcessor.java
+  visible: true
+  text: |
+    package controllers.processors.impl;
+
+    import models.Machine;
+    import controllers.processors.ICoffeeMachineProcessor;
+
+    public class TakeMoneyProcessor implements ICoffeeMachineProcessor {
+        @Override
+        public String getOperationTitle() {
+            return "take";
+        }
+
+        @Override
+        public void execute(Machine coffeeMachine) {
+            int cash = coffeeMachine.takeMoney();
+            System.out.printf("I gave you $%d\n", cash);
+        }
+    }
+  learner_created: true
+- name: src/controllers/cookers/impl/CoffeeBeansTaker.java
+  visible: true
+  text: |
+    package controllers.cookers.impl;
+
+    import controllers.cookers.ICoffeeCooker;
+    import models.CoffeeRecipe;
+    import models.Machine;
+
+    public class CoffeeBeansTaker implements ICoffeeCooker {
+        @Override
+        public void makeCoffee(Machine coffeeMachine, CoffeeRecipe recipe) {
+            coffeeMachine.takeCoffeeBeans(recipe.coffeeBeansPerCup());
+        }
+    }
+  learner_created: true
+- name: src/machine/Application.java
+  visible: true
+  text: |
+    package machine;
+
+    import controllers.processors.ICoffeeMachineProcessor;
+    import controllers.processors.ProcessorFactory;
+    import models.Machine;
+    import utils.ConsoleReader;
+
+    public class Application {
+        private final Machine coffeeMachine;
+        private final ProcessorFactory factory;
+
+        public Application(ProcessorFactory factory, Machine coffeeMachine) {
+            this.factory = factory;
+            this.coffeeMachine = coffeeMachine;
+        }
+
+        public void run() {
+            ICoffeeMachineProcessor processor;
+
+                coffeeMachine.showStats();
+                processor = factory.getProcessor(ConsoleReader.readCommands(factory.getSpecification()));
+                processor.execute(coffeeMachine);
+                coffeeMachine.showStats();
+
+        }
+    }
+  learner_created: true
+- name: src/controllers/processors/ICoffeeMachineProcessor.java
+  visible: true
+  text: |
+    package controllers.processors;
+
+    import models.Machine;
+
+    public interface ICoffeeMachineProcessor {
+        String getOperationTitle();
+        void execute(Machine coffeeMachine);
+    }
+  learner_created: true
+- name: src/utils/Constants.java
+  visible: true
+  text: |
+    package utils;
+
+    import models.RecipeProvider;
+    import specifications.IntegerInputSpecification;
+
+    public class Constants {
+
+        public static final IntegerInputSpecification RECIPE_SPECIFICATION =
+                new IntegerInputSpecification("What do you want to buy? " + RecipeProvider.valuesToString() + ":",
+                        "No such recipe", RecipeProvider.values().length, 1);
+
+    }
+  learner_created: true
+- name: src/utils/ConsoleReader.java
+  visible: true
+  text: |
+    package utils;
+
+    import specifications.IntegerInputSpecification;
+    import specifications.StringInputSpecification;
+
+    import java.util.Scanner;
+
+    public class ConsoleReader {
+        private static final Scanner scanner = new Scanner(System.in);
+
+        public static int readInteger(IntegerInputSpecification specification) {
+            String input;
+            while (true) {
+                System.out.println(specification.inputMessage());
+                input = scanner.next();
+                if (InputValidator.validateInt(input, specification)) {
+                    return Integer.parseInt(input);
+                }
+                System.out.println(specification.invalidValueMessage());
+            }
+        }
+
+        public static String readCommands(StringInputSpecification specification) {
+            String input;
+            while (true){
+                System.out.print(specification.inputMessage()+"\n");
+                input = scanner.next();
+                if(InputValidator.validateString(input, specification)){
+                    return input;
+                }
+                System.out.println(specification.invalidValueMessage());
+            }
+        }
+
+    }
+  learner_created: true
+- name: src/controllers/fillers/impl/WaterFiller.java
+  visible: true
+  text: |
+    package controllers.fillers.impl;
+
+    import models.Machine;
+    import controllers.fillers.ICoffeeMachineFiller;
+    import specifications.IntegerInputSpecification;
+    import utils.ConsoleReader;
+
+    public class WaterFiller implements ICoffeeMachineFiller {
+        private final IntegerInputSpecification specification = new IntegerInputSpecification(
+                "Write how many ml of water you want to add:",
+                "Invalid number", Integer.MAX_VALUE, 0);
+        @Override
+        public void fillSupply(Machine coffeeMachine) {
+            int value = ConsoleReader.readInteger(specification);
+            coffeeMachine.addWater(value);
+        }
+    }
+  learner_created: true
+- name: src/specifications/StringInputSpecification.java
+  visible: true
+  text: |
+    package specifications;
+
+    import java.util.List;
+
+    public record StringInputSpecification(String inputMessage, String invalidValueMessage, List<String> possibleValues) {
+        @Override
+        public String inputMessage() {
+            return inputMessage;
+        }
+
+        @Override
+        public String invalidValueMessage() {
+            return invalidValueMessage;
+        }
+
+        public boolean fitsSpecification(String value){
+            return possibleValues.stream().anyMatch(value::equals);
+        }
+    }
+  learner_created: true
+- name: src/controllers/cookers/impl/WaterTaker.java
+  visible: true
+  text: |
+    package controllers.cookers.impl;
+
+    import controllers.cookers.ICoffeeCooker;
+    import models.CoffeeRecipe;
+    import models.Machine;
+
+    public class WaterTaker implements ICoffeeCooker {
+        @Override
+        public void makeCoffee(Machine coffeeMachine, CoffeeRecipe recipe) {
+            coffeeMachine.takeWater(recipe.waterPerCup());
+        }
+    }
+  learner_created: true
+- name: src/controllers/fillers/impl/MilkFiller.java
+  visible: true
+  text: |
+    package controllers.fillers.impl;
+
+    import models.Machine;
+    import controllers.fillers.ICoffeeMachineFiller;
+    import specifications.IntegerInputSpecification;
+    import utils.ConsoleReader;
+
+    public class MilkFiller implements ICoffeeMachineFiller {
+        private final IntegerInputSpecification specification = new IntegerInputSpecification(
+                "Write how many ml of milk you want to add:",
+                "Invalid number", Integer.MAX_VALUE, 0);
+
+        @Override
+        public void fillSupply(Machine coffeeMachine) {
+            int value = ConsoleReader.readInteger(specification);
+            coffeeMachine.addMilk(value);
+        }
+    }
+  learner_created: true
+- name: src/specifications/IntegerInputSpecification.java
+  visible: true
+  text: |
+    package specifications;
+
+    public record IntegerInputSpecification(String inputMessage, String invalidValueMessage, int maxValue, int minValue) {
+
+        @Override
+        public String inputMessage() {
+            return inputMessage;
+        }
+
+        @Override
+        public String invalidValueMessage() {
+            return invalidValueMessage;
+        }
+
+        public boolean fitsSpecification(int value) {
+            return value >= minValue && value <= maxValue;
+        }
+    }
+  learner_created: true
+- name: src/models/RecipeProvider.java
+  visible: true
+  text: |
+    package models;
+
+
+    public enum RecipeProvider {
+        ESPRESSO(1) {
+            @Override
+            public CoffeeRecipe getRecipe() {
+                return new CoffeeRecipe(this.name().toLowerCase(), 250, 0, 16, 4);
+            }
+        },
+        LATTE(2) {
+            @Override
+            public CoffeeRecipe getRecipe() {
+                return new CoffeeRecipe(this.name().toLowerCase(), 350, 75, 20, 7);
+            }
+        },
+        CAPPUCCINO(3) {
+            @Override
+            public CoffeeRecipe getRecipe() {
+                return new CoffeeRecipe(this.name(), 200, 100, 12, 6);
+            }
+        };
+
+
+        private final int number;
+
+        public static String valuesToString() {
+            StringBuilder str = new StringBuilder();
+            for (RecipeProvider value : values()) {
+                str.append(value.number).append(" - ").append(value.name().toLowerCase()).append(", ");
+            }
+            str.delete(str.length()-2, str.length()-1);
+            str.trimToSize();
+            return str.toString();
+        }
+
+
+        RecipeProvider(int number) {
+            this.number = number;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public static RecipeProvider fromNumber(int number) {
+            for (RecipeProvider value : values()) {
+                if (value.getNumber() == number) {
+                    return value;
+                }
+            }
+            throw new IllegalArgumentException("Recipe by this number not found");
+        }
+
+        public abstract CoffeeRecipe getRecipe();
+    }
+  learner_created: true
+- name: src/controllers/processors/impl/MakeCoffeeProcessor.java
+  visible: true
+  text: |
+    package controllers.processors.impl;
+
+    import controllers.cookers.ICoffeeCooker;
+    import models.CoffeeRecipe;
+    import models.Machine;
+    import controllers.processors.ICoffeeMachineProcessor;
+    import models.RecipeProvider;
+    import utils.ConsoleReader;
+    import utils.Constants;
+
+    import java.util.List;
+
+    public class MakeCoffeeProcessor implements ICoffeeMachineProcessor {
+
+        private final List<ICoffeeCooker> cookers;
+
+        public MakeCoffeeProcessor(List<ICoffeeCooker> cookers) {
+            this.cookers = cookers;
+        }
+
+        @Override
+        public String getOperationTitle() {
+            return "buy";
+        }
+
+        @Override
+        public void execute(Machine coffeeMachine) {
+            RecipeProvider coffee = RecipeProvider.fromNumber(ConsoleReader.readInteger(Constants.RECIPE_SPECIFICATION));
+            CoffeeRecipe recipe = coffee.getRecipe();
+            if (coffeeMachine.canMakeCoffee(recipe)) {
+                for (ICoffeeCooker cooker : cookers) {
+                    cooker.makeCoffee(coffeeMachine, recipe);
+                }
+            } else {
+                System.out.println("I can`t make this cup: not enough supplies");
+            }
+        }
+    }
+  learner_created: true
+- name: src/controllers/cookers/impl/CupsTaker.java
+  visible: true
+  text: |
+    package controllers.cookers.impl;
+
+    import controllers.cookers.ICoffeeCooker;
+    import models.CoffeeRecipe;
+    import models.Machine;
+
+    public class CupsTaker implements ICoffeeCooker {
+        @Override
+        public void makeCoffee(Machine coffeeMachine, CoffeeRecipe recipe) {
+            coffeeMachine.takeCup();
+        }
+    }
+  learner_created: true
+- name: src/controllers/processors/impl/FillMachineProcessor.java
+  visible: true
+  text: |
+    package controllers.processors.impl;
+
+    import controllers.fillers.ICoffeeMachineFiller;
+    import models.Machine;
+    import controllers.processors.ICoffeeMachineProcessor;
+
+    import java.util.List;
+
+    public class FillMachineProcessor implements ICoffeeMachineProcessor {
+        private final List<ICoffeeMachineFiller> fillers;
+
+        public FillMachineProcessor(List<ICoffeeMachineFiller> fillers) {
+            this.fillers = fillers;
+        }
+
+        @Override
+        public String getOperationTitle() {
+            return "fill";
+        }
+
+        @Override
+        public void execute(Machine coffeeMachine) {
+            for (ICoffeeMachineFiller filler : fillers) {
+                filler.fillSupply(coffeeMachine);
+            }
+        }
+    }
+  learner_created: true
+- name: src/controllers/cookers/impl/MilkTaker.java
+  visible: true
+  text: |
+    package controllers.cookers.impl;
+
+    import controllers.cookers.ICoffeeCooker;
+    import models.CoffeeRecipe;
+    import models.Machine;
+
+    public class MilkTaker implements ICoffeeCooker {
+        @Override
+        public void makeCoffee(Machine coffeeMachine, CoffeeRecipe recipe) {
+            coffeeMachine.takeMilk(recipe.milkPerCup());
+        }
+    }
+  learner_created: true
+- name: src/models/Machine.java
+  visible: true
+  text: |
+    package models;
+
+
+    public class Machine {
+        private int water = 400;
+        private int milk = 540;
+        private int coffeeBeans = 120;
+        private int disposableCups = 9;
+        private int money = 550;
+
+        public Machine() {
+
+        }
+
+        public void showStats() {
+            System.out.printf("\nThe coffee machine has:\n" +
+                    "%d ml of water\n" +
+                    "%d ml of milk\n" +
+                    "%d g of coffee beans\n" +
+                    "%d disposable cups\n" +
+                    "$%d of money\n\n", water, milk, coffeeBeans, disposableCups, money);
+        }
+
+        public boolean canMakeCoffee(CoffeeRecipe recipe) {
+            return true;/*water >= recipe.waterPerCup() &&
+                    milk >= recipe.milkPerCup() &&
+                    coffeeBeans >= recipe.coffeeBeansPerCup() &&
+                    disposableCups > 0;*/
+        }
+
+        public void payMoney(int price) {
+            this.money += price;
+        }
+
+        public int takeMoney() {
+            int cash = this.money;
+            this.money = 0;
+            return cash;
+        }
+
+        public void addWater(int water) {
+            this.water += water;
+        }
+
+        public void addMilk(int milk) {
+            this.milk += milk;
+        }
+
+        public void addCoffeeBeans(int coffeeBeans) {
+            this.coffeeBeans += coffeeBeans;
+        }
+
+        public void addDisposableCups(int disposableCups) {
+            this.disposableCups += disposableCups;
+        }
+
+        public void takeWater(int water) {
+            this.water -= water;
+        }
+
+        public void takeMilk(int milk) {
+            this.milk -= milk;
+        }
+
+        public void takeCoffeeBeans(int coffeeBeans) {
+            this.coffeeBeans -= coffeeBeans;
+        }
+
+        public void takeCup() {
+            this.disposableCups--;
+        }
+
+    }
+  learner_created: true
+- name: src/controllers/cookers/impl/MoneyTaker.java
+  visible: true
+  text: |
+    package controllers.cookers.impl;
+
+    import controllers.cookers.ICoffeeCooker;
+    import models.CoffeeRecipe;
+    import models.Machine;
+
+    public class MoneyTaker implements ICoffeeCooker {
+        @Override
+        public void makeCoffee(Machine coffeeMachine, CoffeeRecipe recipe) {
+            coffeeMachine.payMoney(recipe.price());
+        }
+    }
+  learner_created: true
+- name: src/controllers/fillers/impl/CoffeeBeansFiller.java
+  visible: true
+  text: |
+    package controllers.fillers.impl;
+
+    import controllers.fillers.ICoffeeMachineFiller;
+    import models.Machine;
+    import specifications.IntegerInputSpecification;
+    import utils.ConsoleReader;
+
+    public class CoffeeBeansFiller implements ICoffeeMachineFiller {
+        private final IntegerInputSpecification specification = new IntegerInputSpecification(
+                "Write how many grams of coffee beans you want to add:", "Invalid number",
+                Integer.MAX_VALUE, 0);
+
+        @Override
+        public void fillSupply(Machine coffeeMachine) {
+            int value = ConsoleReader.readInteger(specification);
+            coffeeMachine.addCoffeeBeans(value);
+        }
+    }
+  learner_created: true
+- name: src/models/CoffeeRecipe.java
+  visible: true
+  text: |
+    package models;
+
+    public record CoffeeRecipe(String title, int waterPerCup, int milkPerCup, int coffeeBeansPerCup, int price) {
+        @Override
+        public String title() {
+            return title;
+        }
+
+        @Override
+        public int waterPerCup() {
+            return waterPerCup;
+        }
+
+        @Override
+        public int milkPerCup() {
+            return milkPerCup;
+        }
+
+        @Override
+        public int coffeeBeansPerCup() {
+            return coffeeBeansPerCup;
+        }
+
+        @Override
+        public int price() {
+            return price;
+        }
+    }
+  learner_created: true
+- name: src/controllers/fillers/impl/CupsFiller.java
+  visible: true
+  text: |
+    package controllers.fillers.impl;
+
+    import controllers.fillers.ICoffeeMachineFiller;
+    import models.Machine;
+    import specifications.IntegerInputSpecification;
+    import utils.ConsoleReader;
+
+    public class CupsFiller implements ICoffeeMachineFiller {
+        private final IntegerInputSpecification specification = new IntegerInputSpecification(
+                "Write how many disposable cups you want to add:", "Invalid number",
+                Integer.MAX_VALUE, 0);
+
+        @Override
+        public void fillSupply(Machine coffeeMachine) {
+            int value = ConsoleReader.readInteger(specification);
+            coffeeMachine.addDisposableCups(value);
+        }
+    }
+  learner_created: true
+- name: src/controllers/processors/ProcessorFactory.java
+  visible: true
+  text: |
+    package controllers.processors;
+
+    import specifications.StringInputSpecification;
+
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.function.Function;
+    import java.util.stream.Collectors;
+
+    public class ProcessorFactory {
+        private final StringInputSpecification specification;
+        private final Map<String, ICoffeeMachineProcessor> processors;
+
+        public ProcessorFactory(List<ICoffeeMachineProcessor> processorsList) {
+            this.processors = processorsList.stream().collect(Collectors.toMap(ICoffeeMachineProcessor::getOperationTitle, Function.identity()));
+            List<String> operationNames = new ArrayList<>();
+
+            for (ICoffeeMachineProcessor coffeeMachineProcessor : processorsList) {
+                operationNames.add(coffeeMachineProcessor.getOperationTitle());
+            }
+
+            this.specification = new StringInputSpecification(String.format("Write action (%s):",String.join(", ", operationNames)) , "Invalid operation", operationNames);
+        }
+
+        public ICoffeeMachineProcessor getProcessor(String operation) {
+            ICoffeeMachineProcessor processor = processors.get(operation);
+            if (processor == null) {
+                throw new IllegalArgumentException("No such operation");
+            }
+            return processor;
+        }
+
+        public StringInputSpecification getSpecification() {
+            return specification;
+        }
+    }
+  learner_created: true
+- name: src/controllers/processors/impl/RemainderProcessor.java
+  visible: true
+  learner_created: true
+- name: src/controllers/processors/impl/ExitProcessor.java
+  visible: true
+  learner_created: true
+- name: src/controllers/indicators/ICoffeeMachineIndicator.java
+  visible: true
+  learner_created: true
+- name: src/controllers/indicators/impl/WaterIndicator.java
+  visible: true
+  learner_created: true
+- name: src/controllers/indicators/impl/MilkIndicator.java
+  visible: true
+  learner_created: true
+- name: src/controllers/indicators/impl/CoffeeBeansIndicator.java
+  visible: true
+  learner_created: true
+- name: src/controllers/indicators/impl/CupsIndicator.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/5333#comment
+status: Failed
+feedback:
+  message: |-
+    Error in test #7
+
+    Program ran out of input. You tried to read more than expected.
+
+    Please find below the output of your program during this failed test.
+    Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
+
+    ---
+
+    Write action (fill, buy, take, remaining, exit):
+    &gt; remaining
+
+    The coffee machine has:
+    400 ml of water
+    540 ml of milk
+    120 g of coffee beans
+    9 disposable cups
+    $550 of money
+
+    Write action (fill, buy, take, remaining, exit):
+    &gt; buy
+    What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
+    &gt; back
+    No such recipe
+    What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
+    &gt; remaining
+    No such recipe
+    What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
+    &gt; exit
+    No such recipe
+    What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino :
+  time: Thu, 15 Sep 2022 16:29:15 UTC
+record: -1
